@@ -37,9 +37,7 @@
     <button onclick="netlifyIdentity.logout()">Log out</button>
   </div>
 
-  <div class="dashboard-main" id="app-container">
-    <!-- iframe injected here -->
-  </div>
+  <div class="dashboard-main" id="app-container"></div>
 
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
@@ -52,16 +50,27 @@
           return;
         }
 
-        const url = user.user_metadata && user.user_metadata.clearanceUrl;
+        const url =
+          user.user_metadata &&
+          user.user_metadata.clearanceUrl;
+
+        const container = document.getElementById("app-container");
 
         if (!url) {
-          document.getElementById("app-container").innerHTML =
+          container.innerHTML =
             "<p style='padding:24px'>No clearance guide assigned.</p>";
           return;
         }
 
-        document.getElementById("app-container").innerHTML =
-          <iframe src="\" sandbox="allow-scripts allow-same-origin"></iframe>;
+        // ✅ CORRECT WAY TO CREATE IFRAME
+        const iframe = document.createElement("iframe");
+        iframe.src = url;
+        iframe.setAttribute(
+          "sandbox",
+          "allow-scripts allow-same-origin"
+        );
+
+        container.appendChild(iframe);
       });
 
       netlifyIdentity.on("logout", () => {
