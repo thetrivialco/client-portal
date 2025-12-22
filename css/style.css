@@ -99,3 +99,28 @@ body.login-split {
     text-align: center;
   }
 }
+/* Netlify embedded login */
+#netlify-login {
+  margin-top: 24px;
+}
+
+.netlify-identity-widget {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.netlify-identity-widget input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.netlify-identity-widget button {
+  width: 100%;
+  padding: 12px;
+  background: #111;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Client Login | The Trivial Company</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-split">
+
+  <div class="brand-panel">
+    <img src="images/logo-trivial.png" class="brand-logo" />
+    <h1>The Trivial Company</h1>
+    <p>Secure access to client systems and clearance tools.</p>
+  </div>
+
+  <div class="login-panel">
+    <div class="login-inner">
+
+      <h2>Client Portal</h2>
+      <p class="login-note">Authorized clients only</p>
+
+      <!-- Netlify Identity Widget -->
+      <div id="netlify-login"></div>
+
+    </div>
+  </div>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    netlifyIdentity.init();
+
+    netlifyIdentity.on("login", user => {
+      window.location.href = "/dashboard.html";
+    });
+
+    netlifyIdentity.on("logout", () => {
+      window.location.reload();
+    });
+  </script>
+
+</body>
+</html>
