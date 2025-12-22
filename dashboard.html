@@ -1,36 +1,57 @@
-﻿<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-  netlifyIdentity.init();
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Client Dashboard | The Trivial Company</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-split">
 
-  document.addEventListener("DOMContentLoaded", () => {
-    netlifyIdentity.on("init", user => {
-      if (!user) {
+  <div class="brand-panel">
+    <img src="images/logo-trivial.png" class="brand-logo" alt="The Trivial Company" />
+    <h1>The Trivial Company</h1>
+    <p>Client access dashboard</p>
+  </div>
+
+  <div class="login-panel">
+    <div class="login-inner">
+
+      <h2>Dashboard Loaded</h2>
+      <p style="color:#999;font-size:14px;">
+        If you can see this, rendering works.
+      </p>
+
+      <!-- TEMP: static test link -->
+      <a class="login-button"
+         href="https://script.google.com/macros/s/AKfycbzqXH682LTkWv-OL6TKflvg7tOLOr2DlxHDTJwWQZ6DStl5fZAvUHb666NDXvT3NyQ/exec"
+         target="_blank">
+        Open Judd Commons Clearance Guide
+      </a>
+
+      <button class="logout-button" onclick="netlifyIdentity.logout()">
+        Log Out
+      </button>
+
+    </div>
+  </div>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      netlifyIdentity.init();
+
+      netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.location.href = "/";
+        }
+      });
+
+      netlifyIdentity.on("logout", () => {
         window.location.href = "/";
-        return;
-      }
-
-      const container = document.querySelector(".login-inner");
-
-      const clearanceUrl =
-        user.user_metadata && user.user_metadata.clearanceUrl;
-
-      if (clearanceUrl) {
-        container.innerHTML += 
-          <a class="login-button" href="" target="_blank">
-            Open Your Clearance Guide
-          </a>
-        ;
-      } else {
-        container.innerHTML += 
-          <p style="margin-top:16px;color:#777;font-size:14px;">
-            No Clearance Guide assigned to this account yet.
-          </p>
-        ;
-      }
+      });
     });
-  });
+  </script>
 
-  netlifyIdentity.on("logout", () => {
-    window.location.href = "/";
-  });
-</script>
+</body>
+</html>
