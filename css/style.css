@@ -124,3 +124,9 @@ body.login-split {
   border: none;
   cursor: pointer;
 }
+.login-help {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #777;
+  text-align: center;
+}

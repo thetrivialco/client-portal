@@ -9,33 +9,30 @@
 <body class="login-split">
 
   <div class="brand-panel">
-    <img src="images/logo-trivial.png" class="brand-logo" />
+    <img src="images/logo-trivial.png" class="brand-logo" alt="The Trivial Company" />
     <h1>The Trivial Company</h1>
     <p>Secure access to client systems and clearance tools.</p>
   </div>
 
   <div class="login-panel">
     <div class="login-inner">
-
       <h2>Client Portal</h2>
       <p class="login-note">Authorized clients only</p>
 
-      <!-- Netlify Identity Widget -->
-      <div id="netlify-login"></div>
+      <button class="login-button" onclick="netlifyIdentity.open()">
+        Sign In
+      </button>
 
+      <p class="login-help">
+        Access is provided by invitation only.
+      </p>
     </div>
   </div>
 
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
-    netlifyIdentity.init();
-
-    netlifyIdentity.on("login", user => {
+    netlifyIdentity.on("login", () => {
       window.location.href = "/dashboard.html";
-    });
-
-    netlifyIdentity.on("logout", () => {
-      window.location.reload();
     });
   </script>
 
