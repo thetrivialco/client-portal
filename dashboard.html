@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h1>Your Dashboard</h1>
+<p id="user-email"></p>
+
+<button id="logout">Log Out</button>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  const user = netlifyIdentity.currentUser();
+  if (user) {
+    document.getElementById("user-email").innerText =
+      "Logged in as: " + user.email;
+  }
+
+  document.getElementById("logout").onclick = () => {
+    netlifyIdentity.logout();
+    window.location.href = "/login.html";
+  };
+</script>
+
+</body>
+</html>

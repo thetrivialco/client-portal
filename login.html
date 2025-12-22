@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Client Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h1>Client Portal</h1>
+<p>Please sign in to continue.</p>
+
+<button onclick="netlifyIdentity.open()">Log In</button>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  netlifyIdentity.on("login", () => {
+    window.location.href = "/dashboard.html";
+  });
+</script>
+
+</body>
+</html>
