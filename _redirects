@@ -1,1 +1,5 @@
-/dashboard.html  /login.html  302  !role=authenticated
+﻿# Root goes to login
+/   /login.html   302
+
+# Protect dashboard (must be logged in)
+/dashboard.html   /login.html   302   !role=authenticated
