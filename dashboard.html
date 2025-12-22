@@ -1,58 +1,27 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Client Dashboard | The Trivial Company</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body class="login-split">
+﻿<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  netlifyIdentity.init();
 
-  <div class="brand-panel">
-    <img src="images/logo-trivial.png" class="brand-logo" alt="The Trivial Company" />
-    <h1>The Trivial Company</h1>
-    <p>Client access dashboard.</p>
-  </div>
-
-  <div class="login-panel">
-    <div class="login-inner">
-
-      <h2>Your Dashboard</h2>
-      <p class="login-note">Authorized client access</p>
-
-      <a id="clearance-link" class="login-button" target="_blank">
-        Open Your Clearance Guide
-      </a>
-
-      <button class="logout-button" onclick="netlifyIdentity.logout()">
-        Log Out
-      </button>
-
-    </div>
-  </div>
-
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    const user = netlifyIdentity.currentUser();
-
+  netlifyIdentity.on("init", user => {
     if (!user) {
       window.location.href = "/";
-    } else {
-      const clearanceUrl = user.user_metadata && user.user_metadata.clearanceUrl;
-
-      if (clearanceUrl) {
-        document.getElementById("clearance-link").href = clearanceUrl;
-      } else {
-        document.getElementById("clearance-link").innerText =
-          "No Clearance Guide Assigned";
-        document.getElementById("clearance-link").removeAttribute("href");
-      }
+      return;
     }
 
-    netlifyIdentity.on("logout", () => {
-      window.location.href = "/";
-    });
-  </script>
+    const clearanceUrl =
+      user.user_metadata && user.user_metadata.clearanceUrl;
 
-</body>
-</html>
+    const link = document.getElementById("clearance-link");
+
+    if (clearanceUrl) {
+      link.href = clearanceUrl;
+    } else {
+      link.textContent = "No Clearance Guide Assigned";
+      link.removeAttribute("href");
+    }
+  });
+
+  netlifyIdentity.on("logout", () => {
+    window.location.href = "/";
+  });
+</script>
