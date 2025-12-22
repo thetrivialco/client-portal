@@ -20,7 +20,7 @@
       <p class="login-note">Authorized clients only</p>
 
       <button class="login-button" onclick="netlifyIdentity.open()">
-        Sign In
+        SIGN IN
       </button>
 
       <p class="login-help">
@@ -31,8 +31,14 @@
 
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
+    netlifyIdentity.init();
+
     netlifyIdentity.on("login", () => {
       window.location.href = "/dashboard.html";
+    });
+
+    netlifyIdentity.on("logout", () => {
+      window.location.href = "/";
     });
   </script>
 
