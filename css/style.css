@@ -130,3 +130,17 @@ body.login-split {
   color: #777;
   text-align: center;
 }
+.logout-button {
+  margin-top: 24px;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #999;
+  color: #333;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.logout-button:hover {
+  background: #eee;
+}
