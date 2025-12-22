@@ -6,26 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="login-page">
+<body class="login-split">
 
-  <div class="login-container">
-    <div class="login-card">
+  <div class="brand-panel">
+    <img
+      src="images/logo-trivial.png"
+      alt="The Trivial Company"
+      class="brand-logo"
+    />
+    <h1>The Trivial Company</h1>
+    <p>
+      Secure access to client systems, reports, and services.
+    </p>
+  </div>
 
-      <img
-        src="images/logo-trivial.png"
-        alt="The Trivial Company"
-        class="login-logo"
-      />
-
-      <h1>Client Portal</h1>
-      <p class="login-subtext">
-        Authorized access only.
+  <div class="login-panel">
+    <div class="login-inner">
+      <h2>Client Portal</h2>
+      <p class="login-note">
+        Authorized clients only.
       </p>
 
       <button class="login-button" onclick="netlifyIdentity.open()">
-        Client Log In
+        Sign In
       </button>
-
     </div>
   </div>
 
