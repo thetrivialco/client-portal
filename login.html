@@ -1,22 +1,40 @@
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Client Login</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <title>Client Login | The Trivial Company</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="login-page">
 
-<h1>Client Portal</h1>
-<p>Please sign in to continue.</p>
+  <div class="login-container">
+    <div class="login-card">
 
-<button onclick="netlifyIdentity.open()">Log In</button>
+      <img
+        src="images/logo-trivial.png"
+        alt="The Trivial Company"
+        class="login-logo"
+      />
 
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-  netlifyIdentity.on("login", () => {
-    window.location.href = "/dashboard.html";
-  });
-</script>
+      <h1>Client Portal</h1>
+      <p class="login-subtext">
+        Authorized access only.
+      </p>
+
+      <button class="login-button" onclick="netlifyIdentity.open()">
+        Client Log In
+      </button>
+
+    </div>
+  </div>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    netlifyIdentity.on("login", () => {
+      window.location.href = "/dashboard.html";
+    });
+  </script>
 
 </body>
 </html>
