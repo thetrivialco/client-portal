@@ -1,6 +1,20 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  (function () {
+    const hash = window.location.hash;
+    if (hash.includes("invite_token")) {
+      sessionStorage.setItem("netlify_invite_hash", hash);
+    } else {
+      const saved = sessionStorage.getItem("netlify_invite_hash");
+      if (saved) {
+        history.replaceState(null, "", saved);
+        sessionStorage.removeItem("netlify_invite_hash");
+      }
+    }
+  })();
+</script>
   <meta charset="UTF-8" />
   <title>Client Login | The Trivial Company</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,5 +64,6 @@
 
 </body>
 </html>
+
 
 
