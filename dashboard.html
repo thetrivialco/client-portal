@@ -50,9 +50,48 @@
           return;
         }
 
-        const url =
-          user.user_metadata &&
-          user.user_metadata.clearanceUrl;
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  netlifyIdentity.init();
+
+  netlifyIdentity.on("init", async user => {
+    if (!user) {
+      window.location.href = "/";
+      return;
+    }
+
+    const token = user.token.access_token;
+
+    const res = await fetch("/.netlify/functions/resolve-client", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      document.getElementById("app-container").innerHTML =
+        "<p style='padding:24px'>No clearance guide assigned.</p>";
+      return;
+    }
+
+    const data = await res.json();
+
+    const iframe = document.createElement("iframe");
+    iframe.src = data.appUrl;
+    iframe.setAttribute(
+      "sandbox",
+      "allow-scripts allow-same-origin"
+    );
+
+    document.getElementById("app-container").appendChild(iframe);
+  });
+
+  netlifyIdentity.on("logout", () => {
+    window.location.href = "/";
+  });
+});
+</script>
+
 
         const container = document.getElementById("app-container");
 
