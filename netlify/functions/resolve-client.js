@@ -8,7 +8,9 @@
     "thegofuser@gmail.com": {
       clientId: "savant",
       clientName: "Savant",
-      appUrl: "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec"
+      appUrl: "https://script.google.com/macros/s/AKfycbzgviBf6w1xFSRu-LDuAFWj5jYOjW9qqy9Dp_v_zcb1w-z1c2bA76_VpHiYNBOX36OqEw/exec"
+	  
+	
     },
     "echavarria@thetrivialcompany.com": {
       clientId: "cerrito-mayfair",
