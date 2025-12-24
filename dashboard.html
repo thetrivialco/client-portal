@@ -41,20 +41,20 @@
     <button onclick="netlifyIdentity.logout()">Log out</button>
   </div>
 
-  <!-- THIS DIV IS REQUIRED -->
+  <!-- REQUIRED RENDER TARGET -->
   <div class="dashboard-main" id="app-container"></div>
 
   <!-- Netlify Identity -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
-  <!-- Authenticated loader -->
+  <!-- Authenticated loader (CORRECT VERSION) -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       if (!window.netlifyIdentity) return;
 
       netlifyIdentity.init();
 
-      netlifyIdentity.on("init", async user => {
+      async function loadClearance(user) {
         if (!user) {
           window.location.href = "/";
           return;
@@ -83,6 +83,17 @@
             "<h2>Error loading clearance guide</h2>";
           console.error(e);
         }
+      }
+
+      // CASE 1: user already logged in (page refresh)
+      const existingUser = netlifyIdentity.currentUser();
+      if (existingUser) {
+        loadClearance(existingUser);
+      }
+
+      // CASE 2: user just logged in
+      netlifyIdentity.on("login", user => {
+        loadClearance(user);
       });
 
       netlifyIdentity.on("logout", () => {
