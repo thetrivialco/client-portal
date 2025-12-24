@@ -12,10 +12,14 @@ export async function handler(event) {
 
   const email = payload.email?.toLowerCase();
 
-  const CLIENT_MAP = {
-    "thegofuser@gmail.com":
-      "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec"
-  };
+const CLIENT_MAP = {
+  "thegofuser@gmail.com":
+    "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec",
+
+  "echavarria@thetrivialcompany.com":
+    "https://script.google.com/macros/s/AKfycbzqXH682LTkWv-OL6TKflvg7tOLOr2DlxHDTJwWQZ6DStl5fZAvUHb666NDXvT3NyQ/exec"
+};
+
 
   const appUrl = CLIENT_MAP[email];
   if (!appUrl) {
