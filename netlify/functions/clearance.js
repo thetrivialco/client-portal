@@ -1,27 +1,57 @@
-exports.handler = async (event, context) => {
-  const user = context.clientContext && context.clientContext.user;
+﻿import fetch from "node-fetch";
 
-  if (!user || !user.email) {
+export async function handler(event) {
+  const auth = event.headers.authorization || "";
+
+  if (!auth.startsWith("Bearer ")) {
     return {
       statusCode: 401,
       body: "Unauthorized"
     };
   }
 
-  const email = user.email.toLowerCase();
+  const token = auth.replace("Bearer ", "");
 
-  const clearanceMap = {
-    "byepyramid@gmail.com":
-      "https://script.google.com/macros/s/AKfycbzqXH682LTkWv-OL6TKflvg7tOLOr2DlxHDTJwWQZ6DStl5fZAvUHb666NDXvT3NyQ/exec",
+  let payload;
+  try {
+    payload = JSON.parse(
+      Buffer.from(token.split(".")[1], "base64").toString()
+    );
+  } catch {
+    return { statusCode: 401, body: "Invalid token" };
+  }
 
-    "ernestoaudra@gmail.com":
-      "https://script.google.com/a/macros/thetrivialcompany.com/s/AKfycbzqXH682LTkWv-OL6TKflvg7tOLOr2DlxHDTJwWQZ6DStl5fZAvUHb666NDXvT3NyQ/exec"
+  const email = payload.email?.toLowerCase();
+
+  const CLIENT_MAP = {
+    "thegofuser@gmail.com":
+      "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec",
+
+    "echavarria@thetrivialcompany.com":
+      "https://script.google.com/macros/s/AKfycbyKXQxAMCfO7vlkp2b-dqDKFshN3T3qcH9KkjHwgqAwXQaHvwteErCs0uHBRzcGYdaW/exec"
   };
+
+  const appUrl = CLIENT_MAP[email];
+
+  if (!appUrl) {
+    return {
+      statusCode: 403,
+      body: "No access"
+    };
+  }
+
+  const res = await fetch(appUrl, {
+    headers: { "User-Agent": "Netlify-Clearance-Proxy" }
+  });
+
+  const html = await res.text();
 
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      clearanceUrl: clearanceMap[email] || null
-    })
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-store"
+    },
+    body: html
   };
-};
+}
