@@ -1,5 +1,8 @@
-﻿# Root goes to login
-/   /login.html   302
+﻿# Clearance reverse proxy
+/clearance  /.netlify/functions/clearance-proxy  200
 
-# Protect dashboard (must be logged in)
-/dashboard.html   /login.html   302   !role=authenticated
+# Root goes to login
+/  /login.html  302
+
+# Protect dashboard
+/dashboard.html  /login.html  302  !role=authenticated
