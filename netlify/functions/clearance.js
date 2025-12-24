@@ -30,23 +30,33 @@ export async function handler(event) {
 
   const html = await res.text();
 
-  // Strip scripts, styles, and tags to force readable text
-  const textOnly = html
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
-    .replace(/<\/?[^>]+>/g, "")
-    .replace(/\r/g, "")
-    .replace(/\n\s*\n+/g, "\n\n")
-    .trim();
+  // Option 1: escape HTML and render raw source for proof
+  const escaped = html
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 
   return {
     statusCode: 200,
     headers: {
-      "Content-Type": "text/plain; charset=utf-8",
+      "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "no-store"
     },
-    body:
-      textOnly ||
-      "Clearance loaded successfully, but no readable text was found."
+    body: `
+      <div style="padding:16px;font-family:monospace">
+        <h3>Clearance HTML Debug View</h3>
+        <p>This confirms the Google endpoint returned non-empty HTML.</p>
+        <pre style="
+          white-space: pre-wrap;
+          word-break: break-word;
+          background: #f6f6f6;
+          border: 1px solid #ddd;
+          padding: 12px;
+          border-radius: 6px;
+          max-height: 80vh;
+          overflow: auto;
+        ">${escaped}</pre>
+      </div>
+    `
   };
 }
