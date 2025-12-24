@@ -22,15 +22,31 @@ export async function handler(event) {
     return { statusCode: 403, body: "No access" };
   }
 
-  const res = await fetch(appUrl);
+  const res = await fetch(appUrl, {
+    headers: {
+      "User-Agent": "Netlify-Clearance-Proxy"
+    }
+  });
+
   const html = await res.text();
+
+  // Strip scripts, styles, and tags to force readable text
+  const textOnly = html
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<\/?[^>]+>/g, "")
+    .replace(/\r/g, "")
+    .replace(/\n\s*\n+/g, "\n\n")
+    .trim();
 
   return {
     statusCode: 200,
     headers: {
-      "Content-Type": "text/html; charset=utf-8",
+      "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "no-store"
     },
-    body: html
+    body:
+      textOnly ||
+      "Clearance loaded successfully, but no readable text was found."
   };
 }
