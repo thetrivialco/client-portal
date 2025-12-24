@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -28,7 +28,13 @@
     .dashboard-main {
       height: calc(100vh - 56px);
       width: 100%;
-      overflow: auto;
+      background: #fff;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
       background: #fff;
     }
   </style>
@@ -41,59 +47,53 @@
     <button onclick="netlifyIdentity.logout()">Log out</button>
   </div>
 
-  <!-- REQUIRED RENDER TARGET -->
-  <div class="dashboard-main" id="app-container"></div>
+  <!-- Clearance Guide iframe -->
+  <div class="dashboard-main">
+    <iframe
+      id="clearance-frame"
+      src=""
+      sandbox="
+        allow-scripts
+        allow-same-origin
+        allow-forms
+        allow-modals
+        allow-popups
+        allow-downloads
+      "
+    ></iframe>
+  </div>
 
   <!-- Netlify Identity -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
-  <!-- Authenticated loader (CORRECT VERSION) -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       if (!window.netlifyIdentity) return;
 
       netlifyIdentity.init();
 
-      async function loadClearance(user) {
+      const CLEARANCE_URL =
+        "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec";
+
+      function loadDashboard(user) {
         if (!user) {
           window.location.href = "/";
           return;
         }
 
-        try {
-          const token = user.token.access_token;
-
-          const res = await fetch("/clearance", {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-
-          if (!res.ok) {
-            document.getElementById("app-container").innerHTML =
-              "<h2>Unauthorized</h2>";
-            return;
-          }
-
-          const html = await res.text();
-          document.getElementById("app-container").innerHTML = html;
-
-        } catch (e) {
-          document.getElementById("app-container").innerHTML =
-            "<h2>Error loading clearance guide</h2>";
-          console.error(e);
-        }
+        // Simply load the Google app directly
+        document.getElementById("clearance-frame").src = CLEARANCE_URL;
       }
 
-      // CASE 1: user already logged in (page refresh)
+      // Page refresh case
       const existingUser = netlifyIdentity.currentUser();
       if (existingUser) {
-        loadClearance(existingUser);
+        loadDashboard(existingUser);
       }
 
-      // CASE 2: user just logged in
+      // Login event
       netlifyIdentity.on("login", user => {
-        loadClearance(user);
+        loadDashboard(user);
       });
 
       netlifyIdentity.on("logout", () => {
