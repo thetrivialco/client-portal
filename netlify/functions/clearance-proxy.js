@@ -33,10 +33,10 @@ exports.handler = async (event) => {
 
 const CLIENT_MAP = {
   "thegofuser@gmail.com": {
-    appUrl: "https://script.google.com/macros/u/1/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec"
+    appUrl: "https://script.google.com/macros/s/AKfycbyt6JyVndlvM7o2KDbdomBj1ReKFZdta14ytXA2UvUgy6cahHOoZJkQjlB_0vwacJUvRA/exec"
   },
   "ernesto@thetrivialcompany.com": {
-    appUrl: "https://script.google.com/macros/u/2/s/AKfycbyKXQxAMCfO7vlkp2b-dqDKFshN3T3qcH9KkjHwgqAwXQaHvwteErCs0uHBRzcGYdaW/exec"
+    appUrl: "https://script.google.com/macros/s/AKfycbyt6JyVndlvM7o2KDbdomBj1ReKFZdta14ytXA2UvUgy6cahHOoZJkQjlB_0vwacJUvRA/exec"
   }
 };
 
