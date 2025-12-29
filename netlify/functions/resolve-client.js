@@ -1,4 +1,4 @@
-﻿exports.handler = async (event) => {
+exports.handler = async (event) => {
   const auth = event.headers.authorization || "";
   if (!auth.startsWith("Bearer ")) {
     return { statusCode: 401, body: "Unauthorized" };
