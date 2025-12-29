@@ -1,17 +1,37 @@
-exports.handler = async (event, context) => {
-  // ✅ Netlify Identity injects the user here (cookie-based, no headers needed)
-  const user = context.clientContext && context.clientContext.user;
+exports.handler = async (event) => {
+  // 1. Read cookies sent automatically by the browser
+  const cookieHeader = event.headers.cookie || "";
 
-  if (!user || !user.email) {
+  const match = cookieHeader.match(/nf_jwt=([^;]+)/);
+  if (!match) {
     return {
       statusCode: 401,
       body: "Unauthorized"
     };
   }
 
-  const email = user.email.toLowerCase();
+  // 2. Decode Netlify Identity JWT (payload only)
+  let payload;
+  try {
+    payload = JSON.parse(
+      Buffer.from(match[1].split(".")[1], "base64").toString("utf8")
+    );
+  } catch {
+    return {
+      statusCode: 401,
+      body: "Invalid session"
+    };
+  }
 
-  // ✅ Your explicit allow-list
+  const email = payload.email?.toLowerCase();
+  if (!email) {
+    return {
+      statusCode: 401,
+      body: "Unauthorized"
+    };
+  }
+
+  // 3. Explicit allow-list
   const CLIENT_MAP = {
     "thegofuser@gmail.com": {
       appUrl: "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec"
@@ -22,7 +42,6 @@ exports.handler = async (event, context) => {
   };
 
   const record = CLIENT_MAP[email];
-
   if (!record) {
     return {
       statusCode: 403,
@@ -30,7 +49,7 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // ✅ SAME-TAB REDIRECT AFTER AUTHORIZATION
+  // 4. SAME-TAB redirect
   return {
     statusCode: 302,
     headers: {
