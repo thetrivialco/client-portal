@@ -47,20 +47,6 @@
     <button onclick="netlifyIdentity.logout()">Log out</button>
   </div>
 
-  <div class="dashboard-main">
-    <iframe
-      id="clearance-frame"
-      sandbox="
-        allow-scripts
-        allow-same-origin
-        allow-forms
-        allow-modals
-        allow-popups
-        allow-downloads
-      "
-    ></iframe>
-  </div>
-
   <!-- Netlify Identity -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
@@ -102,12 +88,16 @@
           `;
         }
       }
+function loadDashboard(user) {
+  if (!user) {
+    window.location.href = "/";
+    return;
+  }
 
-      function loadDashboard(user) {
-        if (!user) {
-          window.location.href = "/";
-          return;
-        }
+  // 🔴 SAME TAB REDIRECT THROUGH NETLIFY AUTH GATE
+  window.location.href = "/.netlify/functions/clearance-proxy";
+}
+
 
         const token = user.token.access_token;
         loadClearance(token);
