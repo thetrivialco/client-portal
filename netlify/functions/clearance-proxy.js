@@ -33,15 +33,12 @@ exports.handler = async (event) => {
 
 const CLIENT_MAP = {
   "thegofuser@gmail.com": {
-    // Trevor test
-    appUrl: "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec?authuser=1"
+    appUrl: "https://script.google.com/macros/u/1/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec"
   },
   "ernesto@thetrivialcompany.com": {
-    // Ernesto test
-    appUrl: "https://script.google.com/macros/s/AKfycbyKXQxAMCfO7vlkp2b-dqDKFshN3T3qcH9KkjHwgqAwXQaHvwteErCs0uHBRzcGYdaW/exec?authuser=2"
+    appUrl: "https://script.google.com/macros/u/2/s/AKfycbyKXQxAMCfO7vlkp2b-dqDKFshN3T3qcH9KkjHwgqAwXQaHvwteErCs0uHBRzcGYdaW/exec"
   }
 };
-
 
   const record = CLIENT_MAP[email];
   if (!record) {
