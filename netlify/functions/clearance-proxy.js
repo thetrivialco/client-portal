@@ -31,15 +31,17 @@ exports.handler = async (event) => {
     };
   }
 
-  // 3. Explicit allow-list
-  const CLIENT_MAP = {
-    "thegofuser@gmail.com": {
-      appUrl: "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec"
-    },
-    "echavarria@thetrivialcompany.com": {
-      appUrl: "https://script.google.com/macros/s/AKfycbyKXQxAMCfO7vlkp2b-dqDKFshN3T3qcH9KkjHwgqAwXQaHvwteErCs0uHBRzcGYdaW/exec"
-    }
-  };
+const CLIENT_MAP = {
+  "thegofuser@gmail.com": {
+    // Trevor test
+    appUrl: "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec?authuser=1"
+  },
+  "ernesto@thetrivialcompany.com": {
+    // Ernesto test
+    appUrl: "https://script.google.com/macros/s/AKfycbyKXQxAMCfO7vlkp2b-dqDKFshN3T3qcH9KkjHwgqAwXQaHvwteErCs0uHBRzcGYdaW/exec?authuser=2"
+  }
+};
+
 
   const record = CLIENT_MAP[email];
   if (!record) {
