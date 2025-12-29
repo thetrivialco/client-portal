@@ -1,4 +1,5 @@
-export async function handler(event) {
+exports.handler = async (event) => {
+
   const auth = event.headers.authorization || "";
 
   if (!auth.startsWith("Bearer ")) {
