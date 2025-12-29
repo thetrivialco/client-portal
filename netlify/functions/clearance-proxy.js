@@ -12,6 +12,7 @@ exports.handler = async (event) => {
   const payload = JSON.parse(
     Buffer.from(token.split(".")[1], "base64").toString()
   );
+
   const email = payload.email?.toLowerCase();
 
   const CLIENT_MAP = {
@@ -32,20 +33,12 @@ exports.handler = async (event) => {
     };
   }
 
-  const res = await fetch(record.appUrl, {
-    headers: {
-      "User-Agent": "Netlify-Clearance-Proxy"
-    }
-  });
-
-  const html = await res.text();
-
+  //  REDIRECT (NO FETCH, NO HTML)
   return {
-    statusCode: 200,
+    statusCode: 302,
     headers: {
-      "Content-Type": "text/html; charset=utf-8",
+      Location: record.appUrl,
       "Cache-Control": "no-store"
-    },
-    body: html
+    }
   };
-}
+};
