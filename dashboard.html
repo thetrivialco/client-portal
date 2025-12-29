@@ -47,11 +47,9 @@
     <button onclick="netlifyIdentity.logout()">Log out</button>
   </div>
 
-  <!-- Clearance Guide iframe -->
   <div class="dashboard-main">
     <iframe
       id="clearance-frame"
-      src=""
       sandbox="
         allow-scripts
         allow-same-origin
@@ -71,11 +69,39 @@
       if (!window.netlifyIdentity) return;
 
       netlifyIdentity.init();
-      
-      const USE_PROXY = true; // set to false to instantly revert
 
-      const CLEARANCE_URL =
-        "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec";
+      const iframe = document.getElementById("clearance-frame");
+
+      async function loadClearance(token) {
+        try {
+          const res = await fetch("/.netlify/functions/clearance-proxy", {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+
+          if (!res.ok) {
+            iframe.srcdoc = `
+              <div style="padding:20px;font-family:sans-serif">
+                <h2>Unauthorized</h2>
+                <p>You do not have access to this client.</p>
+              </div>
+            `;
+            return;
+          }
+
+          const html = await res.text();
+          iframe.srcdoc = html;
+
+        } catch (err) {
+          iframe.srcdoc = `
+            <div style="padding:20px;font-family:sans-serif">
+              <h2>Error loading dashboard</h2>
+              <pre>${err.message}</pre>
+            </div>
+          `;
+        }
+      }
 
       function loadDashboard(user) {
         if (!user) {
@@ -83,10 +109,8 @@
           return;
         }
 
-      document.getElementById("clearance-frame").src = USE_PROXY
-        ? "/.netlify/functions/clearance-proxy"
-        : CLEARANCE_URL;
-
+        const token = user.token.access_token;
+        loadClearance(token);
       }
 
       // Page refresh case
@@ -95,7 +119,6 @@
         loadDashboard(existingUser);
       }
 
-      // Login event
       netlifyIdentity.on("login", user => {
         loadDashboard(user);
       });
