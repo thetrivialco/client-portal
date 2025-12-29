@@ -1,20 +1,17 @@
-exports.handler = async (event) => {
-  const auth = event.headers.authorization || "";
+exports.handler = async (event, context) => {
+  // ✅ Netlify Identity injects the user here (cookie-based, no headers needed)
+  const user = context.clientContext && context.clientContext.user;
 
-  if (!auth.startsWith("Bearer ")) {
+  if (!user || !user.email) {
     return {
       statusCode: 401,
       body: "Unauthorized"
     };
   }
 
-  const token = auth.replace("Bearer ", "");
-  const payload = JSON.parse(
-    Buffer.from(token.split(".")[1], "base64").toString()
-  );
+  const email = user.email.toLowerCase();
 
-  const email = payload.email?.toLowerCase();
-
+  // ✅ Your explicit allow-list
   const CLIENT_MAP = {
     "thegofuser@gmail.com": {
       appUrl: "https://script.google.com/macros/s/AKfycbw0Q1sOPM9lxrTKKCpv-WVsy37aibaDLHhaAKjW9bDllA29MQb7WNzEzq9zxULtktFmyQ/exec"
@@ -33,7 +30,7 @@ exports.handler = async (event) => {
     };
   }
 
-  //  REDIRECT (NO FETCH, NO HTML)
+  // ✅ SAME-TAB REDIRECT AFTER AUTHORIZATION
   return {
     statusCode: 302,
     headers: {
