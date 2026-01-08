@@ -37,8 +37,21 @@ const CLIENT_MAP = {
   },
   "ernesto@thetrivialcompany.com": {
     appUrl: "https://script.google.com/macros/s/AKfycbyt6JyVndlvM7o2KDbdomBj1ReKFZdta14ytXA2UvUgy6cahHOoZJkQjlB_0vwacJUvRA/exec"
+  },
+  "rchavarria@thetrivialcompany.com": {
+    appUrl: "https://script.google.com/macros/s/AKfycbyKXQxAMCfO7vlkp2b-dqDKFshN3T3qcH9KkjHwgqAwXQaHvwteErCs0uHBRzcGYdaW/exec"
+  },
+  "achavarria@thetrivialcompany.com": {
+    appUrl: "https://script.google.com/macros/s/AKfycbyKXQxAMCfO7vlkp2b-dqDKFshN3T3qcH9KkjHwgqAwXQaHvwteErCs0uHBRzcGYdaW/exec"
+  },
+  "arivera@thetrivialcompany.com": {
+    appUrl: "https://script.google.com/macros/s/AKfycbxOc2s4mTBBWq4RPHFqbJ4ZrAQc7HQcAivTUnGcPwc8qAXmmedqfl1m6uwUHh_bv9ZI/exec"
+  },
+  "trevorgrantbms@gmail.com": {
+    appUrl: "https://script.google.com/macros/s/AKfycbylTB1-7pYrIJmApkpqXjII-5KWAJDoXHIWWzALtBK4HRwWedhu0cKM6aszS41AoZ5K/exec"
   }
 };
+
 
   const record = CLIENT_MAP[email];
   if (!record) {
