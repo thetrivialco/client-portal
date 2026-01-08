@@ -35,7 +35,7 @@ const CLIENT_MAP = {
   "thegofuser@gmail.com": {
     appUrl: "https://script.google.com/macros/s/AKfycbyt6JyVndlvM7o2KDbdomBj1ReKFZdta14ytXA2UvUgy6cahHOoZJkQjlB_0vwacJUvRA/exec"
   },
-  "ernesto@thetrivialcompany.com": {
+  "echavarria@thetrivialcompany.com": {
     appUrl: "https://script.google.com/macros/s/AKfycbyt6JyVndlvM7o2KDbdomBj1ReKFZdta14ytXA2UvUgy6cahHOoZJkQjlB_0vwacJUvRA/exec"
   },
   "rchavarria@thetrivialcompany.com": {
